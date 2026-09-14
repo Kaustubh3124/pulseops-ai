@@ -1,8 +1,4 @@
-"""Realistic Seed Data for Zuddl PulseOps AI Demo Scenario.
 
-Represents a high-stakes B2B event:
-"Zuddl Product Summit 2026: The AI-Native Event Ops Revolution"
-"""
 
 import json
 from sqlalchemy.orm import Session
