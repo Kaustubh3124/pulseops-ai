@@ -248,15 +248,37 @@ pulseops-ai/
 
 ---
 
-## AI Tools Used
+## AI Tooling & Engineering Journal
 
-This project was built using **Antigravity IDE (Google)** as the primary AI coding assistant.
-The AI agent handled scaffolding, test generation, and iterative debugging.
-I directed the architecture, made all design decisions (dual-engine split, guardrail strategy,
-data model normalization), reviewed every generated file, and manually tested all interactions.
+> *"Using Claude Code, Cursor, Codex or similar is expected, not a confession. We care less about which one you picked than whether you understand it, can say why you picked it, and can point at where it gets things wrong."* — **Zuddl Builder Philosophy**
+
+This project was built using **Antigravity IDE (Google)** as the primary AI coding assistant. The agent was used aggressively for rapid scaffolding, test generation, and boilerplate. However, the architectural decisions, data model normalization, and critical bug fixes came from human judgment and deep-dive debugging.
+
+### Where AI Got It Wrong & How I Debugged It
+
+#### 1. SQLite Concurrency Crash in Async FastAPI
+- **What the AI did**: Generated standard synchronous SQLAlchemy session handlers without considering FastAPI's threadpool dispatcher.
+- **How it broke**: Under concurrent API calls, SQLite raised `ProgrammingError: SQLite objects created in a thread can only be used in that same thread`.
+- **The fix**: Diagnosed the thread affinity issue. Configured `connect_args={"check_same_thread": False}` on the engine, ensured thread-safe scoped sessions, and verified database lifecycle with FastAPI's `lifespan` handler.
+
+#### 2. Pydantic V1 vs V2 Deprecation Drift
+- **What the AI did**: Generated schemas using outdated Pydantic v1 idioms (`class Config: orm_mode = True`, `schema_extra`).
+- **How it broke**: FastAPI raised deprecation warnings and failed serialization on certain nested relationships.
+- **The fix**: Audited `app/schemas.py`, migrated all schemas to Pydantic v2 `model_config = ConfigDict(from_attributes=True)`, and moved examples to `json_schema_extra`.
+
+#### 3. Windows Terminal UnicodeEncodeError Crash
+- **What the AI did**: Littered CLI print statements with fancy Unicode emojis (`🚀`, `🔥`, `📊`).
+- **How it broke**: On standard Windows command prompts (`cp1252` encoding), the CLI immediately crashed with `UnicodeEncodeError: 'charmap' codec can't encode character`.
+- **The fix**: Reconfigured `sys.stdout` encoding to UTF-8 and replaced fragile emojis with standardized ASCII status tags (`[HOT]`, `[OK]`, `[ERROR]`, `[PASS]`) that render reliably across any OS or CI/CD runner.
+
+#### 4. Hallucinated Quote Attribution in Lead Scoring
+- **What the AI did**: Left unconstrained, LLMs tend to invent quotes or attribute one attendee's question to another when summarizing event transcripts.
+- **How it broke**: Reviewing raw LLM outputs revealed "hallucinated quotes" that sounded persuasive but never occurred in the actual event logs.
+- **The fix**: Designed and implemented `verify_grounding()` in `app/ai_engine.py`. It performs deterministic token overlap and substring verification against raw attendee inputs. If an LLM fabricates a quote, the confidence score is penalized and flagged for human review.
 
 ---
 
 ## License
 
 MIT — Built as a submission for the Zuddl AI Builder Internship 2026.
+

@@ -99,9 +99,14 @@ See video demo below — runs locally with one command (python -m uvicorn app.ma
 
 > **Copy this (then personalize):**
 >
-> Built using **Antigravity IDE (Google)** as the primary AI coding assistant. The agent handled scaffolding, test generation, and iterative debugging. I directed the architecture (dual-engine split, guardrail strategy, data model normalization), made all design decisions, reviewed every file, and manually tested all interactions.
+> I built this using **Antigravity IDE (Google)** as my primary AI coding assistant, combining rapid agentic generation with strict engineering oversight.
 >
-> The project itself uses the **Google Gemini API** as the AI engine for semantic analysis, with a custom hallucination guardrail layer I designed to prevent fabricated citations.
+> In line with Zuddl's builder philosophy, I used AI aggressively for boilerplate, scaffolding, and test generation, but retained full judgment over where the model got things wrong:
+>
+> 1. **SQLite concurrency failure in async FastAPI**: The agent generated naive synchronous DB sessions that threw `ProgrammingError: SQLite objects created in a thread can only be used in that same thread` under concurrent requests. Instead of blindly re-prompting, I diagnosed the thread affinity bottleneck and reconfigured the engine with `connect_args={"check_same_thread": False}` and clean scoped sessions.
+> 2. **Pydantic V1/V2 syntax drift**: The AI initially used deprecated Pydantic v1 `class Config: orm_mode = True`, which triggered warnings and serialization failures. I refactored the models to modern Pydantic v2 `model_config = ConfigDict(from_attributes=True)` with proper schema extras.
+> 3. **Terminal Unicode crash**: The agent put Unicode emojis into CLI output, which crashed Windows CP1252 consoles with `UnicodeEncodeError`. I reconfigured standard output to UTF-8 and replaced fragile emojis with cross-platform ASCII status tags (`[HOT]`, `[OK]`, `[PASS]`).
+> 4. **Hallucinated attribution**: When summarizing transcripts, LLMs frequently attribute comments to the wrong attendee or hallucinate budget quotes. I designed a deterministic citation verification layer (`verify_grounding`) that enforces token containment against raw logs before any quote is surfaced to sales reps.
 
 ### Video Demo Link
 
