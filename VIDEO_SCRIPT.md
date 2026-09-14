@@ -1,115 +1,134 @@
-# PulseOps AI — Loom Video Script
+# PulseOps AI — Video Demo Guide & Script (3–5 Minutes)
 
-> Record a 2-3 minute Loom video. Below is a word-for-word script with screen actions.
-> Total target: **2:30 – 3:00 minutes**.
+> **Zuddl Requirement:**
+> *"One demo video — 3–6 minutes. A public Loom or YouTube link that opens without signing in (unlisted is fine, private is not). Show it working and how it's built. A screen recording with your voice is fine. Not a slide deck."*
+>
+> **Target Video Length:** 3:30 – 4:30 minutes.
 
 ---
 
-## Setup Before Recording
+## 🛠️ Setup Before You Hit Record
 
-1. Open terminal in the project folder
-2. Run: `python -m uvicorn app.main:app --host 127.0.0.1 --port 8000`
-3. Open browser to `http://127.0.0.1:8000`
-4. Open a second browser tab to `http://127.0.0.1:8000/docs` (Swagger)
-5. Start Loom recording (screen + camera)
-
----
-
-## Script
-
-### [0:00 – 0:20] — The Hook (Browser: Dashboard)
-
-**SHOW**: Dashboard with KPI cards visible.
-
-**SAY**:
-> "Hey Zuddl team. I'm [Your Name], and this is PulseOps AI — a post-event lead intelligence engine
-> I built specifically for Zuddl's use case.
->
-> The problem: after every virtual event, your Revenue and Event Ops teams get hundreds of attendee records
-> and have to manually figure out who's actually interested. PulseOps automates that entire workflow."
+1. **Terminal 1 (Dev Server)**:
+   Make sure the server is running:
+   ```bash
+   python -m uvicorn app.main:app --host 127.0.0.1 --port 8000
+   ```
+2. **Browser Window**:
+   - Tab 1: `http://127.0.0.1:8000` (PulseOps AI Dashboard)
+   - Tab 2: `http://127.0.0.1:8000/docs` (FastAPI Swagger Interactive Docs)
+   - Tab 3: `https://github.com/Kaustubh3124/pulseops-ai` (Your GitHub Repository)
+3. **Code Editor / Terminal 2**:
+   - Have VS Code open to the `pulseops-ai` directory, showing:
+     - `app/rules_engine.py`
+     - `app/ai_engine.py`
+     - `app/models.py`
+   - Have a terminal ready to run `python -m pytest -v`
+4. **Recording Tool**:
+   - **Option A (Recommended): [Loom](https://www.loom.com/)** (Free browser extension or desktop app). Choose "Screen + Camera" (or Screen + Mic). Once recorded, copy the share link (`https://www.loom.com/share/...`). Check that the link privacy is set to **"Public"** or **"Anyone with the link can view"**.
+   - **Option B: Screen Recording + YouTube**: Record with OBS / Windows Game Bar (`Win + Alt + R`), upload to YouTube as **Unlisted**, and copy the video URL (`https://youtu.be/...`).
 
 ---
 
-### [0:20 – 0:50] — The Architecture (Browser: Dashboard → mention the split)
-
-**SHOW**: Point to the KPI cards (total leads, hot leads, average score).
-
-**SAY**:
-> "The core idea is a dual-engine scoring pipeline. I intentionally split the scoring into two parts:
->
-> A deterministic rules engine that handles watch-time percentages, ICP role matching, and interaction counts —
-> these are mathematical facts that should never go through an LLM.
->
-> And an AI semantic engine that reads Q&A transcripts and extracts pain points, buying urgency,
-> and commercial intent — this is where language models actually add value.
->
-> The deterministic engine gets 60% weight, the AI engine gets 40%.
-> And on top of the AI, I added hallucination guardrails that verify every cited quote
-> against the attendee's actual session data."
+## 🎬 Word-for-Word Script with Screen Actions
 
 ---
 
-### [0:50 – 1:30] — Live Demo (Browser: Dashboard interaction)
+### Part 1: The Hook & The Problem [0:00 – 0:45]
+**Screen**: Browser Tab 1 — PulseOps AI Dashboard (`http://127.0.0.1:8000`)
 
-**SHOW**: Click on a lead row to open the dossier.
+**What to do**: Have the dashboard open showing the KPI cards at the top and the lead pipeline table below. Move your cursor smoothly over the KPI summary.
 
-**SAY**:
-> "Let me show you a lead. Here's Sarah Chen — she's a VP of Marketing who watched 92% of the event,
-> answered 3 polls, asked 2 questions about ROI and budget timelines.
+**What to say**:
+> "Hi team at Zuddl. My name is Kaustubh, and this is **PulseOps AI** — an automated Post-Event Lead Intelligence and Outreach Engine that I designed specifically for Zuddl's event ecosystem.
 >
-> The rules engine scored her at 88. The AI engine identified buying signals like
-> 'evaluating solutions for Q4 rollout' and extracted her actual question about consolidating
-> event tools.
+> The problem this solves: Right now, after any webinar or summit hosted on Zuddl, event organizers and RevOps teams get hit with a CSV containing hundreds of attendee logs — watch times, poll responses, and Q&A transcripts.
 >
-> The guardrail check passed — every quote you see here traces back to something she actually said."
-
-**SHOW**: Click "Generate Campaign" button.
-
-**SAY**:
-> "And with one click, it generates a personalized follow-up email and LinkedIn message
-> that reference her exact questions. Not a template — actual context from her session."
+> Sales reps have to manually comb through spreadsheets to guess who actually has buying intent. By the time someone sends a generic follow-up 4 days later, over 60% of high-intent buyers have moved on.
+>
+> PulseOps AI takes that raw post-event stream, separates the deterministic math from semantic language understanding, verifies every claim against ground truth, and arms SDRs with high-conversion outreach in under 2 seconds."
 
 ---
 
-### [1:30 – 2:00] — Under the Hood (Browser: Swagger docs OR code editor)
+### Part 2: Show It Working — Live Dashboard & Workflow [0:45 – 2:15]
+**Screen**: Browser Tab 1 (`http://127.0.0.1:8000`)
 
-**SHOW**: Switch to Swagger at `/docs`, or briefly show the project structure in your editor.
+**What to do**:
+1. Click the **"Hot"** filter button above the table to show Sarah Chen and Elena Rostova.
+2. Click on **Sarah Chen's row** to open her lead dossier modal.
+3. Scroll through the dossier highlighting:
+   - **Deterministic Score** (88/100) vs **AI Intent Score** (92/100)
+   - **Key Pain Points** and **Buying Signals**
+   - **Ground Truth Verification** (Green badge: `100% Grounded in Q&A session logs`)
+4. Click the **"Generate Campaign"** button in the modal.
+5. Point out the generated personalized email, LinkedIn invite, and Slack alert payload.
+6. Click **"Dispatch to Slack"** or close the modal.
 
-**SAY**:
-> "Under the hood: Python 3.13, FastAPI with Pydantic v2 validation, SQLAlchemy with a normalized
-> relational schema — Event to Attendee to Signals to Intelligence to Campaign.
+**What to say**:
+> "Let's see it in action. Here on the dashboard, we have real-time KPI metrics showing pipeline conversion, hot leads, and average response times.
 >
-> I chose relational over document store because sales pipelines need strict referential integrity.
-> Every lead's signals and campaign drafts trace back to exactly one event and one person.
+> In the pipeline table, every attendee is categorized into **Hot, Warm, or Cold** tiers based on a blended intelligence score.
 >
-> There are 14 passing tests — rules engine unit tests, hallucination guardrail tests,
-> and full API integration tests."
-
-**SHOW**: (Optional) Briefly run `python -m pytest -v` in terminal to show green passes.
+> If I filter by **Hot leads** and open **Sarah Chen** — she's a VP of Marketing at Acme Corp.
+>
+> Notice the split here:
+> - Her **Deterministic Score is 88** — because she attended 92% of the event, answered 3 polls, and matches our Tier-1 buyer persona.
+> - Her **AI Intent Score is 92** — because our semantic engine extracted active buying signals from her Q&A questions, such as evaluating consolidation tools for a Q4 rollout.
+> - Most importantly, notice this **Hallucination Verification Badge**: every quote and signal cited here was verified against the actual raw Q&A logs.
+>
+> Now, watch this: when an SDR needs to follow up, they don't send a generic template. I click **'Generate Campaign'**, and PulseOps instantly drafts:
+> 1. A personalized email referencing her exact question about tool consolidation.
+> 2. A crisp LinkedIn connection note.
+> 3. A formatted Slack alert ready for immediate webhook dispatch."
 
 ---
 
-### [2:00 – 2:30] — The "Why" & Close
+### Part 3: Show How It's Built — Architecture & Code [2:15 – 3:45]
+**Screen**: Switch to VS Code / Editor & Terminal
 
-**SAY**:
-> "I built this because Zuddl already owns the event experience — the gap is what happens
-> after the event ends. PulseOps bridges that gap.
+**What to do**:
+1. Open [`app/rules_engine.py`](file:///c:/Users/hp/Desktop/Zuddl-project/app/rules_engine.py): show the deterministic scoring function.
+2. Open [`app/ai_engine.py`](file:///c:/Users/hp/Desktop/Zuddl-project/app/ai_engine.py): show the hallucination guardrail verification function.
+3. Open [`app/models.py`](file:///c:/Users/hp/Desktop/Zuddl-project/app/models.py): briefly highlight the relational schema.
+4. Switch to Terminal and run: `python -m pytest -v` (let the 14 green passes show on screen).
+5. (Quick 5 seconds) Switch to Browser Tab 2 (`/docs`) to show the Swagger API endpoints.
+
+**What to say**:
+> "Now let's talk about **how this is built under the hood**.
 >
-> The key design decision: keeping AI and deterministic logic strictly separated.
-> I don't want a language model calculating watch-time percentages,
-> and I don't want if-statements doing semantic reasoning. Mixing those up is
-> the number one mistake in AI-powered tooling.
+> The core architectural philosophy here is: **Don't use AI where deterministic logic belongs, and don't use if-statements where language understanding belongs.**
 >
-> I'm [Your Name]. I'd love to bring this kind of thinking to the Zuddl team.
-> Thanks for watching."
+> In `app/rules_engine.py`, watch time percentage, ICP title matching, and poll participation are computed purely through deterministic mathematics. This is 60% of the lead score. There is zero risk of an LLM hallucinating math or attendance percentages.
+>
+> In `app/ai_engine.py`, we use the LLM specifically for semantic synthesis: understanding pain points and commercial urgency from unstructured Q&A transcripts.
+>
+> Crucially, I implemented a **Hallucination Guardrail Layer** here in `verify_ground_truth_quote()`. It cross-references every extracted quote against the raw attendee session logs using token containment and fuzzy matching. If an LLM fabricates a quote, the confidence score is penalized and flagged for human review.
+>
+> The data layer in `models.py` is built with **FastAPI and SQLAlchemy** using a normalized relational schema: Event, Attendee, EngagementSignal, LeadIntelligence, and CampaignDraft. Sales pipelines require strict referential integrity — every campaign draft must trace back to exactly one lead and one event.
+>
+> Let's run the test suite: `python -m pytest -v`... As you can see, all 14 tests pass — covering the rules engine, the guardrails, and full API integration."
 
 ---
 
-## Recording Tips
+### Part 4: Conclusion & Builder Philosophy [3:45 – 4:20]
+**Screen**: Switch to GitHub Repo tab (`https://github.com/Kaustubh3124/pulseops-ai`) or your Camera / Dashboard
 
-- **Camera**: Keep your face cam ON (Zuddl wants to see you, not just your screen)
-- **Energy**: Be enthusiastic but not scripted — practice twice, then record naturally
-- **Speed**: Don't rush. 2:30 is better than a breathless 1:45
-- **Clicks**: Make your mouse movements deliberate — reviewers are watching small screens
-- **Audio**: Use a headset mic if available; avoid echo-y rooms
-- **Blooper rule**: One small stumble is fine. Re-record if you lose your thread entirely.
+**What to say**:
+> "To wrap up: I built PulseOps AI because it solves a genuine bottleneck in the post-event lifecycle that Zuddl's customers face every day.
+>
+> The entire repository is published on GitHub at `Kaustubh3124/pulseops-ai` — complete with a full README, architecture diagrams, zero exposed secrets, and a clean CLI tool.
+>
+> I'm excited about Zuddl's builder philosophy and would love to bring this combination of pragmatic AI judgment and robust software engineering to the team as an intern.
+>
+> Thank you for your time, and I look forward to hearing from you!"
+
+---
+
+## 💡 Quick Tips for a 10/10 Video
+
+- **Voice & Tone**: Speak clearly with natural confidence. Don't worry if you pause for half a second.
+- **Mouse Clicks**: Keep cursor movements smooth; avoid erratic clicks.
+- **Link Check**: Once you upload to Loom or YouTube:
+  - Open an **Incognito / Private browser window**.
+  - Paste your video link.
+  - Make sure the video plays **without requiring a login**!
