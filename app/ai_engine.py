@@ -1,10 +1,4 @@
-"""AI Semantic Engine & Hallucination Guardrail Layer.
 
-Zuddl Core Evaluation Philosophy:
-"Knowing where AI belongs: Synthesizing messy unstructured dialogue into
-actionable sales triggers, drafting bespoke outreach, and using strict guardrails
-to detect and prevent hallucinations."
-"""
 
 import os
 import json
