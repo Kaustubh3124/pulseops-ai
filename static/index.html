@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PulseOps AI — Post-Event Lead Intelligence & Ops Engine</title>
+  <meta name="description" content="AI-Powered Post-Event Lead Intelligence and Automated Ops Engine built for Zuddl Revenue and Marketing teams.">
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="header">
+    <div class="header-container">
+      <div class="logo-group">
+        <div class="brand-badge">
+          <span>⚡ PulseOps</span>
+          <span style="font-weight: 400; opacity: 0.85;">AI</span>
+        </div>
+        <span class="brand-subtitle">Zuddl Event Intelligence & Revenue Ops Engine</span>
+      </div>
+      <div class="header-actions">
+        <button id="btn-run-pipeline" class="btn btn-primary">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          Run PulseOps Pipeline
+        </button>
+        <button id="btn-seed-demo" class="btn btn-secondary btn-sm" title="Reset to official demo scenario">
+          Reload Demo Event
+        </button>
+        <a href="/docs" target="_blank" class="btn btn-secondary btn-sm">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+          API Docs (/docs)
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Work Area -->
+  <main class="main-wrapper">
+
+    <!-- Active Event Bar -->
+    <section class="event-bar">
+      <div class="event-info">
+        <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.3rem;">
+          <span class="live-pill">Active Event Stream</span>
+          <span id="event-type-badge" class="badge badge-icp-1">Virtual Summit</span>
+        </div>
+        <h1 id="event-title-display">Zuddl Product Summit 2026: The AI-Native Event Ops Revolution</h1>
+        <div class="event-meta">
+          <span class="meta-item">Duration: <strong id="event-duration-display">60 mins</strong></span>
+          <span>&bull;</span>
+          <span class="meta-item">Status: <strong id="event-status-display" style="text-transform: uppercase;">PROCESSED</strong></span>
+          <span>&bull;</span>
+          <span class="meta-item">Event ID: <strong id="event-id-display">#1</strong></span>
+        </div>
+      </div>
+      <div>
+        <select id="event-selector" class="search-box" style="width: auto; min-width: 260px; font-weight: 600;">
+          <!-- Loaded dynamically -->
+        </select>
+      </div>
+    </section>
+
+    <!-- KPI Metric Cards Grid -->
+    <section class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Total Attendees</div>
+        <div class="kpi-value" id="kpi-total-attendees">0</div>
+        <div class="kpi-sub">Ingested session logs & Q&A</div>
+      </div>
+      <div class="kpi-card kpi-hot">
+        <div class="kpi-label">Hot Leads (Sales Ready)</div>
+        <div class="kpi-value" id="kpi-hot-leads" style="color: var(--rose-600);">0</div>
+        <div class="kpi-sub">Score ≥ 70 with verified buying signal</div>
+      </div>
+      <div class="kpi-card kpi-warm">
+        <div class="kpi-label">Warm Leads (Nurture)</div>
+        <div class="kpi-value" id="kpi-warm-leads" style="color: var(--amber-600);">0</div>
+        <div class="kpi-sub">Score 45-69, marketing follow-up</div>
+      </div>
+      <div class="kpi-card kpi-guardrail">
+        <div class="kpi-label">Guardrail Accuracy</div>
+        <div class="kpi-value" id="kpi-guardrail-acc" style="color: var(--emerald-600);">100%</div>
+        <div class="kpi-sub">Grounded against raw session Q&A</div>
+      </div>
+    </section>
+
+    <!-- Leads Table Section -->
+    <section class="content-card">
+      <div class="content-header">
+        <div>
+          <h2 class="content-title">Post-Event Lead Intelligence Pipeline</h2>
+          <p style="font-size: 0.85rem; color: var(--slate-500); margin-top: 0.15rem;">
+            Real-time blended scores: 60% deterministic engagement + 40% AI semantic intent
+          </p>
+        </div>
+        <div class="filter-bar">
+          <input type="text" id="search-input" class="search-box" placeholder="Search attendee, company...">
+          <div style="display: flex; gap: 0.35rem;">
+            <button class="filter-btn active" data-tier="ALL">All</button>
+            <button class="filter-btn" data-tier="HOT">🔥 Hot</button>
+            <button class="filter-btn" data-tier="WARM">⚡ Warm</button>
+            <button class="filter-btn" data-tier="COLD">❄️ Cold</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="leads-table">
+          <thead>
+            <tr>
+              <th>Attendee & Role</th>
+              <th>Company & ICP</th>
+              <th>Session Engagement</th>
+              <th>Blended Intent</th>
+              <th>Top Pain Point / Signal</th>
+              <th>Guardrail</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="leads-table-body">
+            <!-- Populated dynamically -->
+            <tr>
+              <td colspan="7" style="text-align: center; padding: 2rem; color: var(--slate-400);">Loading leads...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Slide-over Dossier Drawer Backdrop -->
+  <div id="drawer-backdrop" class="drawer-backdrop"></div>
+
+  <!-- Slide-over Dossier Drawer -->
+  <aside id="lead-drawer" class="drawer" aria-labelledby="drawer-lead-name">
+    <div class="drawer-header">
+      <div>
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.2rem;">
+          <span id="drawer-tier-badge" class="badge badge-hot">HOT LEAD</span>
+          <span id="drawer-icp-badge" class="badge badge-icp-1">Tier 1 ICP</span>
+        </div>
+        <h2 id="drawer-lead-name" style="font-family: var(--font-display); font-size: 1.35rem; color: var(--slate-900);">Attendee Name</h2>
+        <p id="drawer-lead-subtitle" style="font-size: 0.85rem; color: var(--slate-500);">VP of Marketing at Atlassian &bull; rohan@atlassian.com</p>
+      </div>
+      <button id="drawer-close-btn" class="drawer-close" aria-label="Close dossier">&times;</button>
+    </div>
+
+    <div class="drawer-body">
+      <!-- Section 1: Score & Dual-Engine Breakdown -->
+      <div class="section-card">
+        <div class="section-title">
+          <span>Dual-Engine Score Breakdown</span>
+          <span id="drawer-final-score" style="color: var(--purple-700); font-size: 1.1rem;">96.8 / 100</span>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.5rem;">
+          <div style="background: var(--slate-50); padding: 0.85rem; border-radius: var(--radius-sm);">
+            <div style="font-size: 0.76rem; text-transform: uppercase; color: var(--slate-500); font-weight: 700;">Deterministic Score (60%)</div>
+            <div id="drawer-det-score" style="font-family: var(--font-display); font-size: 1.3rem; font-weight: 800; color: var(--slate-800);">98.0</div>
+            <div style="font-size: 0.78rem; color: var(--slate-500); margin-top: 0.2rem;">Watch time ratio, role authority, poll/chat points.</div>
+          </div>
+          <div style="background: var(--purple-50); padding: 0.85rem; border-radius: var(--radius-sm);">
+            <div style="font-size: 0.76rem; text-transform: uppercase; color: var(--purple-700); font-weight: 700;">AI Semantic Score (40%)</div>
+            <div id="drawer-ai-score" style="font-family: var(--font-display); font-size: 1.3rem; font-weight: 800; color: var(--purple-700);">95.0</div>
+            <div style="font-size: 0.78rem; color: var(--slate-500); margin-top: 0.2rem;">Intent analysis of questions asked & commercial urgency.</div>
+          </div>
+        </div>
+        <p id="drawer-ai-reasoning" style="font-size: 0.84rem; color: var(--slate-600); margin-top: 0.75rem; line-height: 1.5;"></p>
+      </div>
+
+      <!-- Section 2: Session Evidence & Guardrail Grounding -->
+      <div class="section-card">
+        <div class="section-title">
+          <span>Session Evidence & Guardrail Verification</span>
+          <span id="drawer-guardrail-badge" class="guardrail-tag">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Grounding Verified
+          </span>
+        </div>
+        <div style="font-size: 0.82rem; color: var(--slate-600);">
+          <strong>Questions Asked during Live Q&A:</strong>
+          <ul id="drawer-qna-list" style="margin-left: 1.2rem; margin-top: 0.35rem; list-style: disc;">
+            <!-- Questions -->
+          </ul>
+        </div>
+        <div style="font-size: 0.82rem; color: var(--slate-600); margin-top: 0.75rem;">
+          <strong>Poll Response:</strong>
+          <div id="drawer-poll-box" style="margin-top: 0.25rem; font-style: italic;"></div>
+        </div>
+        <div class="grounding-box">
+          <div style="font-size: 0.74rem; text-transform: uppercase; font-weight: 700; color: var(--purple-600); margin-bottom: 0.2rem;">CITED GROUND TRUTH QUOTE</div>
+          "<span id="drawer-cited-quote">...</span>"
+        </div>
+      </div>
+
+      <!-- Section 3: Automated Outreach Generator -->
+      <div class="section-card">
+        <div class="section-title">
+          <span>Personalized SDR Email Draft</span>
+          <button id="btn-copy-email" class="btn btn-secondary btn-sm">Copy Email</button>
+        </div>
+        <div style="margin-bottom: 0.5rem; font-size: 0.85rem;">
+          <strong>Subject:</strong> <span id="drawer-email-subject" style="color: var(--purple-900); font-weight: 600;"></span>
+        </div>
+        <textarea id="drawer-email-body" class="outreach-editor" spellcheck="false"></textarea>
+      </div>
+    </div>
+
+    <div class="drawer-footer">
+      <div style="font-size: 0.8rem; color: var(--slate-500);">
+        Status: <strong id="drawer-campaign-status">APPROVED</strong>
+      </div>
+      <div style="display: flex; gap: 0.5rem;">
+        <button id="btn-dispatch-slack" class="btn btn-primary btn-sm" style="background: #4A154B;">
+          <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M6 15a2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2h2v2zm1 0a2 2 0 0 1 2-2 2 2 0 0 1 2 2v5a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-5zm2-7a2 2 0 0 1-2-2 2 2 0 0 1 2-2 2 2 0 0 1 2 2v2H9zm0 1a2 2 0 0 1 2 2 2 2 0 0 1-2 2H4a2 2 0 0 1-2-2 2 2 0 0 1 2-2h5zm7 2a2 2 0 0 1 2-2 2 2 0 0 1 2 2 2 2 0 0 1-2 2h-2v-2zm-1 0a2 2 0 0 1-2 2 2 2 0 0 1-2-2V6a2 2 0 0 1 2-2 2 2 0 0 1 2 2v5zm-2 7a2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2v-2h2zm0-1a2 2 0 0 1-2-2 2 2 0 0 1 2-2h5a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-5z"/></svg>
+          Push to Slack #leads-hot
+        </button>
+        <button id="btn-dispatch-crm" class="btn btn-success btn-sm">
+          Push to CRM
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">
+    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    <span id="toast-msg">Operation completed successfully.</span>
+  </div>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
