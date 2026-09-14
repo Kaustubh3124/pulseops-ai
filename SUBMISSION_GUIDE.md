@@ -14,7 +14,7 @@
 | **Phone** | _+91 Your number_ |
 | **Current city** | _Your city_ |
 | **LinkedIn** | _Your LinkedIn URL_ |
-| **GitHub** | `https://github.com/YOUR_USERNAME/pulseops-ai` |
+| **GitHub** | `https://github.com/Kaustubh3124/pulseops-ai` |
 | **Resume** | Upload the PDF from `RESUME_TIPS.md` below |
 
 ---
@@ -37,7 +37,7 @@ PulseOps AI — Post-Event Lead Intelligence & Automated Ops Engine
 
 ### GitHub Repository Link
 ```
-https://github.com/YOUR_USERNAME/pulseops-ai
+https://github.com/Kaustubh3124/pulseops-ai
 ```
 
 ### Live Demo Link

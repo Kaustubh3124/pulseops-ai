@@ -105,7 +105,7 @@ This is the core engineering philosophy of PulseOps AI:
 
 ```bash
 # 1. Clone and enter the project
-git clone https://github.com/YOUR_USERNAME/pulseops-ai.git
+git clone https://github.com/Kaustubh3124/pulseops-ai.git
 cd pulseops-ai
 
 # 2. Install dependencies
