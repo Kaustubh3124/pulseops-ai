@@ -250,8 +250,6 @@ pulseops-ai/
 
 ## AI Tooling & Engineering Journal
 
-> *"Using Claude Code, Cursor, Codex or similar is expected, not a confession. We care less about which one you picked than whether you understand it, can say why you picked it, and can point at where it gets things wrong."* — **Zuddl Builder Philosophy**
-
 This project was built using **Antigravity IDE (Google)** as the primary AI coding assistant. The agent was used aggressively for rapid scaffolding, test generation, and boilerplate. However, the architectural decisions, data model normalization, and critical bug fixes came from human judgment and deep-dive debugging.
 
 ### Where AI Got It Wrong & How I Debugged It
@@ -278,7 +276,5 @@ This project was built using **Antigravity IDE (Google)** as the primary AI codi
 
 ---
 
-## License
 
-MIT — Built as a submission for the Zuddl AI Builder Internship 2026.
 
