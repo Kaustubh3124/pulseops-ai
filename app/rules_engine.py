@@ -1,14 +1,4 @@
-"""Rules Engine: Deterministic Business Logic & Scoring Algorithms.
 
-Zuddl Core Evaluation Philosophy:
-"Knowing where AI DOES NOT belong is as important as knowing where it belongs."
-Deterministic scoring uses predictable, auditable mathematical rules for:
-1. Watch-time engagement percentage.
-2. Ideal Customer Profile (ICP) role & company tiering.
-3. Quantifiable interaction frequency (polls, Q&A, chat).
-
-No LLM hallucinations can skew these baseline numbers.
-"""
 
 from typing import Tuple
 
